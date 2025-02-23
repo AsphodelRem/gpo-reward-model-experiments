@@ -1,0 +1,35 @@
+model:
+  model_name_or_path: Qwen/Qwen2-0.5B
+  model_revision: main
+  torch_dtype: float16
+  trust_remote_code: true
+  use_peft: true
+  lora_task_type: SEQ_CLS
+  lora_r: 32
+  lora_alpha: 16
+  lora_dropout: 0.05
+
+trainer:
+  seed: 42
+  device: auto
+  save_dir: output
+  override: true
+
+trainer_config:
+  seed: 42
+  gradient_checkpointing: true
+  eval_strategy: steps
+  eval_steps: 500
+  logging_steps: 5
+  num_train_epochs: 1
+  per_device_train_batch_size: 4
+  max_length: 2048
+  remove_unused_columns: true
+  output_dir: outputs
+  gradient_accumulation_steps: 4
+  learning_rate: 1.0e-4
+  report_to: comet_ml
+
+dataset:
+  dataset_path: /home/asphodel/code/asphodel_diploma/gpo-reward-model-experiments/data/augmented_dataset.parquet
+  train_test_split_ratio: 0.1
